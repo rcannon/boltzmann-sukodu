@@ -24,15 +24,13 @@ source-repository head
 
 library
   exposed-modules:
-      Boltzmann
-    , SudExamples
+      Lib
   other-modules:
       Paths_boltzmann_sudoku
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
-    , hmatrix = 0.20.2
   default-language: Haskell2010
 
 executable boltzmann-sudoku-exe
