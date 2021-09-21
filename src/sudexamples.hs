@@ -1,5 +1,8 @@
 
-module SudExamples where
+module SudEx(easy
+           , gentle
+           , minimal
+           , diabolical) where
 
 import Data.List
 import Grid

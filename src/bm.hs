@@ -1,27 +1,31 @@
 
-module Bm where
+module BoltsMach(updateOneRandom
+               , updateAllSequential) where
 
-import qualified Data.Vector.Generic as V
-import qualified Numeric.LinearAlgebra as LA
-import qualified Numeric.LinearAlgebra.Data as LAD
+import qualified BMBase as Bm
+import BMRandom(getRandomNonExcludedIndex
+              , getRandomNewVal)
 
-type Excludes = [Bool]
-type Index = Int
-type Value = Double
-type Temperature = Value
-type Vector = LAD.Vector
-type Matrix = LAD.Matrix
-
-type Values = Vector Value
-type Biases = Vector Value
-type Weights = Matrix Value
-
-data BM = BM Weights Biases Values
+type Temperature = Bm.Temperature
+type Index = Bm.Index
+type BM = Bm.BM
 
 scaleValForUpdate :: Temperature -> Value -> Value
 scaleValForUpdate t = negate . (/ t)
 
 getValForUpdate :: BM -> Index -> Value
 getValForUpdate (BM wss bs vs) idx 
-  = flip (LAD.!) idx $ LA.add bs $ (LA.#>) wss $ (V.//) vs [(idx, 0.0)]
+  = flip (Bm.!) idx $ Bm.add bs $ (Bm.#>) wss $ (Bm.//) vs [(idx, 0.0)]
+
+updateBMWithNewVal :: Bm.BM -> Index -> Value -> Bm.BM
+updateBMWithNewVal (BM wss bs vs) idx newVal = 
+  = (BM wss bs) $ (Bm.//) vs [(idx, newVal)]
       
+updateOneRandom :: Temperature -> BM -> Excludes -> IO BM
+updateOneRandom t bm@(BM wss bs vs) excl = do
+  idx <- getRandomNnnExlcudedIndex excl
+  newVal <- getRandomNewVal $ scaleValForUpdate t $ getValForUpdate bm idx
+  return $ updateBMWithNewVal bm idx newVal
+
+updateAllSequential :: Temperature -> BM -> Excludes -> IO BM
+updateAllSequential = undefined
