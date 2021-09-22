@@ -25,3 +25,4 @@ data BM = BM Weights Biases Values
 (!) = (LAD.!)
 (#>) = (LA.#>)
 add = LA.add
+matrix = LAD.matrix

@@ -1,10 +1,10 @@
 
-module BoltsMach(updateOneRandom
-               , updateAllSequential) where
+module BoltsMach (updateOneRandom
+                , updateAllSequential) where
 
 import qualified BMBase as Bm
-import BMRandom(getRandomNonExcludedIndex
-              , getRandomNewVal)
+import BMRandom (getRandomNonExcludedIndex
+               , getRandomNewVal)
 
 type Temperature = Bm.Temperature
 type Index = Bm.Index
