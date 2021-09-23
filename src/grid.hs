@@ -13,7 +13,6 @@ nGridValues = length values
 sqrtNumGridVals :: Int
 sqrtNumGridVals = floor $ sqrt $ fromIntegral numValues
 
-boxSideLength :: Int
-boxSideLength = 3
+
 
 

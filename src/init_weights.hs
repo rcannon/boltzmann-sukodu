@@ -2,16 +2,27 @@
 module InitialWeights(initialWeights) where
 
 import BMBase (Value, Index, Matrix, matrix)
-import Grid (boxSideLength, nGridValues, sqrtNumGridVals)
+import Grid (nGridValues, sqrtNumGridVals)
 
 import Data.Tuple (swap)
 
+{-
+
+This module generates the initial weights for
+our Boltzmann machine. The code is mostly 
+indexing for specifying which elements in the
+weight matrix are initially set to 0.0 or -100.0,
+based on the rules of sudoku. The lists of index
+pairs we specify below correspond to the elements
+that should be given negative weight.
+
+-}
+
 sn :: Int
-sn = sqrtNumGridVals
+sn = sqrtNumGridVals-1
 
 n :: Int
-n = nGridVals
-
+n = nGridVals-1
 
 allFourTuples :: [a] -> [(a,a,a,a)]
 allFourTuples xs = 
@@ -20,25 +31,25 @@ allFourTuples xs =
 ijxy :: [(Int, Int, Int, Int)]
 ijxy = allFourTuples [0..sn]
 
-uncurry4 :: (a -> b -> c -> d -> e) -> (a,b,c,d) -> e
-uncurry4 f (a,b,c,d) = f a b c d
-
-sudToVecIndex :: Int -> Int -> Int -> Int -> Int
+sudToVecIndex :: Num a => a -> a -> a -> a -> Index
 sudToVecIndex x y z w = (x * sn + z) + n * (y * sn + w)
 
 ms :: [Int]
 ms = map (uncurry4 sudToVecIndex) ijxy
+  where 
+    uncurry4 f (a,b,c,d) = f a b c d
 
+-- sudoku spot can't be occupied by more than one number
 firstSet :: [(Index, Index)]
 firstSet = [(setI m u, setI m v) | m <- ms, 
                                    u <- [0..n], 
-                                   v <- [0..u]]
+                                   v <- [0..(u-1)]]
   where setI x y = n * x + y
 
-makeIndex :: Int -> Int -> Int -> Int -> Int -> Index
+makeIndex :: Num a => a -> a -> a -> a -> a -> Index
 makeIndex v a b c d = n * (sudToVecIndex a b c d) + v
 
-
+-- only one of each number can occur in any given square
 secondSet :: [(Index, Index)]
 secondSet = [(makeIndex val i j x y , makeIndex val i j u v) 
                 | u <- [0..sn], 
@@ -47,6 +58,7 @@ secondSet = [(makeIndex val i j x y , makeIndex val i j u v)
                   val <- [0..n],
                   not (u == x && v == y)]
 
+-- only one of each number can occur in any given column
 thirdSet :: [(Index, Index)]
 thirdSet = [(makeIndex val i j x y , makeIndex val u j v y) 
               | u <- [0..sn], 
@@ -55,7 +67,7 @@ thirdSet = [(makeIndex val i j x y , makeIndex val u j v y)
                 val <- [0..n],
                 not (u == i && v == x)]
 
-
+-- only one of each number can occur in any given row
 fourthSet :: [(Index, Index)]
 fourthSet = [(makeIndex val i j x y , makeIndex val i u x v) 
               | u <- [0..sn], 
@@ -69,8 +81,17 @@ fixedValIndices =
   let pairs = concat [firstSet, secondSet, thirdSet, fourthSet] in
     (++) <$> id <*> map swap $ pairs
 
-nCols :: Index
-nCols = n * boxSideLength ^ 4
+{-
+    (number of suduko rows) 
+  x (number of suduko columns)
+  x (number of possible values)
+  = nMatrixCols
+ note: each term in product must be equal since 
+ exactly one of each value must go
+ in each row/column/square
+-}
+nMatrixCols :: Index
+nMatrixCols = nGridVals ^ 3 
 
 weightList :: [[Value]]
 weightList = map indexToVal allPairs
@@ -80,6 +101,5 @@ weightList = map indexToVal allPairs
                       else 0.0
     allPairs = [ (i,j) | j <- [0..(nCols-1)], i <- [0..(nCols-1)]
 
-
 initialWeights :: Matrix Value
-initialWeights = matrix nCols weightList
+initialWeights = matrix nMatrixCols weightList

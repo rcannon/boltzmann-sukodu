@@ -1,6 +1,5 @@
 
-module BoltsMach (updateOneRandom
-                , updateAllSequential) where
+module BoltsMach (randomUpdate) where
 
 import qualified BMBase as Bm
 import BMRandom (getRandomNonExcludedIndex
@@ -21,11 +20,9 @@ updateBMWithNewVal :: Bm.BM -> Index -> Value -> Bm.BM
 updateBMWithNewVal (BM wss bs vs) idx newVal = 
   = (BM wss bs) $ (Bm.//) vs [(idx, newVal)]
       
-updateOneRandom :: Temperature -> BM -> Excludes -> IO BM
-updateOneRandom t bm@(BM wss bs vs) excl = do
-  idx <- getRandomNnnExlcudedIndex excl
+randomUpdate :: Temperature -> BM -> Excludes -> IO BM
+randomUpdate t bm excl = do
+  idx <- getRandomNonExlcudedIndex excl
   newVal <- getRandomNewVal $ scaleValForUpdate t $ getValForUpdate bm idx
   return $ updateBMWithNewVal bm idx newVal
 
-updateAllSequential :: Temperature -> BM -> Excludes -> IO BM
-updateAllSequential = undefined
