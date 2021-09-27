@@ -1,17 +1,18 @@
 
 module BMRandom(getRandomNonExcludedIndex
-              , getRandomNewVal) where
+              , getRandomValue) where
 
 import BMBase(Value, Index, Excludes)
 
 import System.Random
 import System.Random.Stateful
 
-gen :: IO StGen
+gen :: IO StdGen
 gen = getStdGen
 
-getRandomValue :: IO Value
-getRandomValue = randomIO
+TODO
+getRandomValue :: Value IO Value
+getRandomValue v = randomIO
 
 getRandomNonExcludedIndex :: Excludes -> IO Index
 getRandomNonExcludedIndex excl = do

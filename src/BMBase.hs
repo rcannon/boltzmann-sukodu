@@ -21,8 +21,20 @@ type Weights = Matrix Value
 data BM = BM Weights Biases Values
 
 -- Matrix/Vector functions
+(//) :: Vector Value -> [(Index, Value)] -> Vector Value
 (//) = (V.//)
+
+(!) :: Vector Value -> Index -> Value
 (!) = (LAD.!)
+
+(#>) :: Matrix Value -> Vector Value -> Vector Value
 (#>) = (LA.#>)
+
+add :: Vector Value -> Vector Value -> Vector Value
 add = LA.add
+
+matrix :: Index -> [Value] -> Matrix Value
 matrix = LAD.matrix
+
+vector :: [Value] -> Vector Value
+vector = LAD.vector

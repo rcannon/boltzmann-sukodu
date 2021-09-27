@@ -2,7 +2,7 @@
 module InitialWeights(initialWeights) where
 
 import BMBase (Value, Index, Matrix, matrix)
-import Grid (nGridValues, sqrtNumGridVals)
+import Grid (nGridValues, sqrtNumGridVals, cubeNumGridVals)
 
 import Data.Tuple (swap)
 
@@ -13,7 +13,7 @@ our Boltzmann machine. The code is mostly
 indexing for specifying which elements in the
 weight matrix are initially set to 0.0 or -100.0,
 based on the rules of sudoku. The lists of index
-pairs we specify below correspond to the elements
+pairs we specify below coorespond to the elements
 that should be given negative weight.
 
 -}
@@ -22,7 +22,7 @@ sn :: Int
 sn = sqrtNumGridVals-1
 
 n :: Int
-n = nGridVals-1
+n = nGridValues-1
 
 allFourTuples :: [a] -> [(a,a,a,a)]
 allFourTuples xs = 
@@ -31,7 +31,7 @@ allFourTuples xs =
 ijxy :: [(Int, Int, Int, Int)]
 ijxy = allFourTuples [0..sn]
 
-sudToVecIndex :: Num a => a -> a -> a -> a -> Index
+sudToVecIndex :: Int -> Int -> Int -> Int -> Index
 sudToVecIndex x y z w = (x * sn + z) + n * (y * sn + w)
 
 ms :: [Int]
@@ -46,7 +46,7 @@ firstSet = [(setI m u, setI m v) | m <- ms,
                                    v <- [0..(u-1)]]
   where setI x y = n * x + y
 
-makeIndex :: Num a => a -> a -> a -> a -> a -> Index
+makeIndex :: Int -> Int -> Int -> Int -> Int -> Index
 makeIndex v a b c d = n * (sudToVecIndex a b c d) + v
 
 -- only one of each number can occur in any given square
@@ -81,25 +81,18 @@ fixedValIndices =
   let pairs = concat [firstSet, secondSet, thirdSet, fourthSet] in
     (++) <$> id <*> map swap $ pairs
 
-{-
-    (number of suduko rows) 
-  x (number of suduko columns)
-  x (number of possible values)
-  = nMatrixCols
- note: each term in product must be equal since 
- exactly one of each value must go
- in each row/column/square
--}
-nMatrixCols :: Index
-nMatrixCols = nGridVals ^ 3 
 
-weightList :: [[Value]]
+-- number of columns in weight matrix
+nCols :: Index
+nCols = cubeNumGridVals 
+
+weightList :: [Value]
 weightList = map indexToVal allPairs
   where 
     indexToVal pair = if elem pair fixedValIndices
                       then -100.0
                       else 0.0
-    allPairs = [ (i,j) | j <- [0..(nCols-1)], i <- [0..(nCols-1)]
+    allPairs = [ (i,j) | j <- [0..(nCols-1)], i <- [0..(nCols-1)]]
 
 initialWeights :: Matrix Value
-initialWeights = matrix nMatrixCols weightList
+initialWeights = matrix nCols weightList

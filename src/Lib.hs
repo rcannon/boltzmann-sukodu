@@ -1,6 +1,15 @@
 module Lib
-    ( someFunc
+    ( randomUpdate
+    , makeBMfromValues
+    , listFixedValsInGrid 
+    , easy
+    , gentle
+    , diabolical
+    , minimal
+    , vector
+    , Grid
     ) where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+import Grid (Grid, listFixedValsInGrid)
+import BoltzMach (randomUpdate, makeBMfromGrid)
+import SudEx (easy, gentle, diabolical, minimal)
