@@ -1,15 +1,17 @@
 module Lib
-    ( randomUpdate
-    , makeBMfromValues
+    ( BM
+    , randomUpdate
+    , makeBMfromGrid
     , listFixedValsInGrid 
     , easy
     , gentle
     , diabolical
     , minimal
-    , vector
+    , makeGridFromBM
     , Grid
     ) where
 
 import Grid (Grid, listFixedValsInGrid)
-import BoltzMach (randomUpdate, makeBMfromGrid)
+import BoltzMach (randomUpdate, makeBMfromGrid, makeGridFromBM)
 import SudEx (easy, gentle, diabolical, minimal)
+import BMBase (BM, vector)

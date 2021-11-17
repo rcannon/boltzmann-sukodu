@@ -1,11 +1,11 @@
 
-module BoltzMach (randomUpdate, makeBMfromGrid) where
+module BoltzMach (randomUpdate, makeBMfromGrid, makeGridFromBM) where
 
 import BMBase (BM(BM))
 import qualified BMBase as Bm
 
 import InitialWeights (initialWeights)
-import Grid (gridValues, cubeNumGridVals, Grid)
+import Grid (gridValues, nGridValues, cubeNumGridVals, Grid)
 import BMRandom (getRandomNonExcludedIndex
                , getRandomValue)
 
@@ -23,12 +23,25 @@ makeBMfromGrid gd = BM weights biases values
       let toActiveList x = map (\ y -> if y == x then 1.0 else 0.0) gridValues
       in Bm.vector $ concat $ map toActiveList $ concat gd
 
+makeGridFromBM :: BM -> Grid
+makeGridFromBM (BM _ _ vs) = 
+  split nGridValues $ map gridValFromBMval $ split nGridValues $ Bm.toList vs
+    where 
+      split n [] = []
+      split n xs = (take n xs) : (split n (drop n xs))
+      gridValFromBMval xs = 
+        let xs' = filter (\ (x,i) -> (x > 0.5)) $ zip xs [1..nGridValues] in
+        case xs' of 
+          (x,i):[] -> i
+          _        -> 0
+
 scaleValForUpdate :: Temperature -> Value -> Value
-scaleValForUpdate t = negate . (/ t)
+scaleValForUpdate t = recip . (+ 1.0) . exp . (/ t) . negate
 
 getValForUpdate :: BM -> Index -> Value
 getValForUpdate (BM wss bs vs) idx 
-  = flip (Bm.!) idx $ Bm.add bs $ (Bm.#>) wss $ (Bm.//) vs [(idx, 0.0)]
+  = flip (Bm.!) idx $ Bm.add bs $ (Bm.#>) wss vs
+-- OLD: vs -> $ (Bm.//) vs [(idx, 0.0)]
 
 updateBMWithNewVal :: Bm.BM -> Index -> Value -> Bm.BM
 updateBMWithNewVal (BM wss bs vs) idx newVal 

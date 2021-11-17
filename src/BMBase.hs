@@ -38,3 +38,6 @@ matrix = LAD.matrix
 
 vector :: [Value] -> Vector Value
 vector = LAD.vector
+
+toList :: Vector Value -> [Value]
+toList = V.toList

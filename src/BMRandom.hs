@@ -10,9 +10,10 @@ import System.Random.Stateful
 gen :: IO StdGen
 gen = getStdGen
 
-TODO
-getRandomValue :: Value IO Value
-getRandomValue v = randomIO
+getRandomValue :: Value -> IO Value
+getRandomValue v = do
+  d <- randomIO
+  return $ if d < v then 1.0 else 0.0
 
 getRandomNonExcludedIndex :: Excludes -> IO Index
 getRandomNonExcludedIndex excl = do
