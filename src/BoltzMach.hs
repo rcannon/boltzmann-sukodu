@@ -27,16 +27,16 @@ makeGridFromBM :: BM -> Grid
 makeGridFromBM (BM _ _ vs) = 
   split nGridValues $ map gridValFromBMval $ split nGridValues $ Bm.toList vs
     where 
-      split n [] = []
+      split _ [] = []
       split n xs = (take n xs) : (split n (drop n xs))
       gridValFromBMval xs = 
-        let xs' = filter (\ (x,i) -> (x > 0.5)) $ zip xs [1..nGridValues] in
+        let xs' = filter (\ (x,i) -> (x > 0.5)) (zip xs [1..nGridValues]) in 
         case xs' of 
           (x,i):[] -> i
           _        -> 0
 
 scaleValForUpdate :: Temperature -> Value -> Value
-scaleValForUpdate t = recip . (+ 1.0) . exp . (/ t) . negate
+scaleValForUpdate t = (+ 1.0) . recip . exp . (/ t) . negate
 
 getValForUpdate :: BM -> Index -> Value
 getValForUpdate (BM wss bs vs) idx 
@@ -49,7 +49,8 @@ updateBMWithNewVal (BM wss bs vs) idx newVal
       
 randomUpdate :: Temperature -> BM -> Excludes -> IO BM
 randomUpdate t bm excl = do
-  idx <- getRandomNonExcludedIndex excl
+  idx <- getRandomNonExcludedIndex $ excl
+  putStrLn $ "index " ++ show idx
   newVal <- getRandomValue $ scaleValForUpdate t $ getValForUpdate bm idx
   return $ updateBMWithNewVal bm idx newVal
 

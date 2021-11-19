@@ -29,9 +29,9 @@ cubeNumGridVals = nGridValues ^ 3
 sqrtNumGridVals :: Int
 sqrtNumGridVals = floor $ sqrt $ fromIntegral nGridValues
 
+getExcludedValsFormat :: [Bool] -> [Bool]
+getExcludedValsFormat excl = concat $ map (\b -> replicate nGridValues b) excl 
+
 listFixedValsInGrid :: Grid -> [Bool]
-listFixedValsInGrid gd =
-  map isFixed $ concat gd
-    where
-      isFixed = (==0)
+listFixedValsInGrid gd = concat $ map (replicate nGridValues . (/= 0)) $ concat gd
 
