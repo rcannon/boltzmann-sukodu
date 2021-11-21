@@ -41,7 +41,6 @@ scaleValForUpdate t = (+ 1.0) . recip . exp . (/ t) . negate
 getValForUpdate :: BM -> Index -> Value
 getValForUpdate (BM wss bs vs) idx 
   = flip (Bm.!) idx $ Bm.add bs $ (Bm.#>) wss vs
--- OLD: vs -> $ (Bm.//) vs [(idx, 0.0)]
 
 updateBMWithNewVal :: Bm.BM -> Index -> Value -> Bm.BM
 updateBMWithNewVal (BM wss bs vs) idx newVal 
