@@ -14,7 +14,7 @@ run 0 bm _ = pure bm
 run n bm fixed = do
   bm' <- randomUpdate temperature bm fixed
   putStrLn $ show $ makeGridFromBM bm'
-  bm'' <- run (n-1) bm' $ listFixedValsInGrid $ makeGridFromBM bm'
+  bm'' <- run (n-1) bm' fixed 
   return bm''
 
 main :: IO ()

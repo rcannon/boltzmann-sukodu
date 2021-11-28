@@ -49,7 +49,6 @@ updateBMWithNewVal (BM wss bs vs) idx newVal
 randomUpdate :: Temperature -> BM -> Excludes -> IO BM
 randomUpdate t bm excl = do
   idx <- getRandomNonExcludedIndex $ excl
-  putStrLn $ "index " ++ show idx
   newVal <- getRandomValue $ scaleValForUpdate t $ getValForUpdate bm idx
   return $ updateBMWithNewVal bm idx newVal
 
