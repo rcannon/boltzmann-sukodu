@@ -18,9 +18,6 @@ getRandomValue v = do
 getRandomNonExcludedIndex :: Excludes -> IO Index
 getRandomNonExcludedIndex excl = do
   idx <- randomRIO (0, l-1) :: IO Index
-  putStrLn "--------"
-  putStrLn $ show idx
-  putStrLn $ show $ length ns
   return $ ns !! idx
     where
       ns = [n | (b,n) <- zip excl [0..], not b]

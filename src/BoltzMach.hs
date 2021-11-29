@@ -36,7 +36,7 @@ makeGridFromBM (BM _ _ vs) =
           _        -> 0
 
 scaleValForUpdate :: Temperature -> Value -> Value
-scaleValForUpdate t = (+ 1.0) . recip . exp . (/ t) . negate
+scaleValForUpdate t = recip . (+ 1.0) . exp . (/ t) . negate
 
 getValForUpdate :: BM -> Index -> Value
 getValForUpdate (BM wss bs vs) idx 
