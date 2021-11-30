@@ -4,10 +4,13 @@ module Main where
 import Lib
 
 baseTemperature :: Double
-baseTemperature = 60.0
+baseTemperature = 100.0
 
-nIterations :: Int
-nIterations = 2000000
+nIterations :: Integer
+nIterations = 1000000
+
+power :: Int
+power = 2
 
 prettyPrintGrid :: Grid -> IO ()
 prettyPrintGrid [] = putStrLn ""
@@ -16,25 +19,26 @@ prettyPrintGrid (g:gd) = do
   _ <- prettyPrintGrid gd
   return ()
 
-run :: Int -> BM -> [Bool] -> IO BM
+run :: Integer -> BM -> [Bool] -> IO BM
 run 0 bm _ = pure bm
 run n bm fixed = do
   bm' <- randomUpdate temperature bm fixed
-  --putStrLn $ show temperature
-  --prettyPrintGrid $ makeGridFromBM bm'
   bm'' <- run (n-1) bm' fixed 
   return bm''
     where 
-      -- multiplier = ((1 / baseTemperature) + (fromIntegral (n-1)) / (fromIntegral nIterations)) ^ 2
-      multiplier = ((fromIntegral (n-1)) / (fromIntegral nIterations)) ^ 2
+      x = (fromIntegral n) / (fromIntegral nIterations)
+      multiplier = min 1.0 $ (x ^ power) * ((exp x) - 1)
       temperature = baseTemperature * multiplier 
+
 main :: IO ()
 main = 
   let 
     bm = makeBMfromGrid easy
     fixed = listFixedValsInGrid easy
-  in do 
-    putStrLn "Starting..."
+  in do
+    putStrLn "" 
+    putStrLn "Running the Boltzmann Machine..."
+    putStrLn ""
     bm' <- run nIterations bm fixed
     prettyPrintGrid $ makeGridFromBM bm'
     return ()

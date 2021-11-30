@@ -1,0 +1,26 @@
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/src/Grid.hs:
+  hash: 95420053d6a265c8be55351ae2a4073c3afd1382d213ee64706a775c1173615b
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/src/BoltzMach.hs:
+  hash: daa263416d949da09b469aac37c4cf9b4bc70b00a1b519abdb010f7e20f42afd
+/Users/cannon/.stack/programs/x86_64-osx/ghc-8.10.7/lib/ghc-8.10.7/include/ghcversion.h:
+  hash: c013160c9aa8a98f4638616496dce720c23ceca8ef9d6b3212b654642fbda5e4
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/src/Lib.hs:
+  hash: 8a82b1229919ba5e0074a0b1716f20fa90f4830ac41d644563e9b2602267a277
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/src/SudEx.hs:
+  hash: 284825e9623975cd611437aac2147f7f1777363b8e4d0593009ae510c102d422
+? /Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/.stack-work/dist/x86_64-osx/Cabal-3.2.1.0/build/autogen/cabal_macros.h
+: hash: 117b8b1dd36dfcae45553cb20a798fd9e15f07dc11f04d25d4909ae2adc3c4bb
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/README.md:
+  hash: 813a38d271f21790ca40dd8277f893227fc10978e469e89f2764db93d691073f
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/boltzmann-sudoku.cabal:
+  hash: eceb03fc9b28a0ae2d0995cf9c45c58a89bc4a29ce32deec1e5a38774b089590
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/src/BMRandom.hs:
+  hash: bee49c0f882fa523d793ca067b28d93d08dea12fed8f1ffdcba64e9d12e1d3af
+? /Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/.stack-work/dist/x86_64-osx/Cabal-3.2.1.0/build/autogen/Paths_boltzmann_sudoku.hs
+: hash: 2c8227dc5a46ca9487ea24fea21aec0a766b66c535cd9a0522f6c1565bb0ef9b
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/src/BMBase.hs:
+  hash: cd96069c3f0bd03f1e0cecd59b8168ca65503ddf7c1d81c8cd0df67cf32c4380
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/src/InitialWeights.hs:
+  hash: 522ea36b1808f6b624a512a2c08664c49d1b031274c54c7bcfd64935122a053f
+/Users/cannon/Learning/Haskell/boltzmann_sudoku/boltzmann-sudoku/ChangeLog.md:
+  hash: 83e0780795b5a6de906672f975b8011d9a6ea37b4c7b4dbb70e073579a2b0ccc
