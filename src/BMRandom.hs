@@ -7,9 +7,6 @@ import BMBase(Value, Index, Excludes)
 import System.Random
 import System.Random.Stateful
 
---gen :: IO StdGen
---gen = getStdGen
-
 getRandomValue :: Value -> IO Value
 getRandomValue v = do
   d <- randomIO
