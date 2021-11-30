@@ -7,7 +7,8 @@ baseTemperature :: Double
 baseTemperature = 100.0
 
 nIterations :: Integer
-nIterations = 1000000
+nIterations = 100
+-- for better results, set  nIterations >= 1000000
 
 power :: Int
 power = 2
